@@ -21,7 +21,7 @@ To get started with the project, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/distraction-free-social.git
+   git clone https://github.com/vbs-0/Distraction-Free-Social.git
    ```
 
 2. **Navigate to the project directory**:
@@ -48,7 +48,7 @@ We welcome contributions! If you have suggestions or improvements, feel free to 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact 📫
-For any inquiries, please reach out to [your-email@example.com](mailto:your-email@example.com).
+For any inquiries, please reach out to [your-email@example.com](mailto:chbhadri0@gmail.com).
 
 ---
 
