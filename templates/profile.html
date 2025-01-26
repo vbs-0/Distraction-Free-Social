@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">Profile Information</h3>
+                            <p class="mt-1 text-sm text-gray-500">Update your profile information and interests.</p>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-6">
+                            <dl class="sm:divide-y sm:divide-gray-200">
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                                    <dt class="text-sm font-medium text-gray-500">Email</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user.email }}</dd>
+                                </div>
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                                    <dt class="text-sm font-medium text-gray-500">Interests</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        <div class="flex flex-wrap gap-2">
+                                            {% for interest in user.interests %}
+                                            <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
+                                                {{ interest }}
+                                            </span>
+                                            {% endfor %}
+                                        </div>
+                                    </dd>
+                                </div>
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                                    <dt class="text-sm font-medium text-gray-500">Member since</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ user.created_at }}</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

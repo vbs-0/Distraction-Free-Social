@@ -1,0 +1,118 @@
+{
+    "posts": [
+        {
+            "id": "1",
+            "user_id": "2",
+            "content": "java is good",
+            "description": "java",
+            "tags": [
+                "java"
+            ],
+            "media_files": [],
+            "created_at": "2025-01-06T15:14:29.268990",
+            "likes": 2,
+            "comments": [],
+            "liked_by": [
+                "4",
+                "8"
+            ]
+        },
+        {
+            "id": "2",
+            "user_id": "2",
+            "content": "java is divine",
+            "description": "spring",
+            "tags": [
+                "java"
+            ],
+            "media_files": [],
+            "created_at": "2025-01-06T15:15:05.961810",
+            "likes": 1,
+            "comments": [],
+            "liked_by": [
+                "8"
+            ]
+        },
+        {
+            "id": "3",
+            "user_id": "2",
+            "content": "spring boot",
+            "description": "component and beans",
+            "tags": [
+                "java"
+            ],
+            "media_files": [],
+            "created_at": "2025-01-06T15:15:49.276984",
+            "likes": 1,
+            "comments": [],
+            "liked_by": [
+                "8"
+            ]
+        },
+        {
+            "id": "4",
+            "user_id": "3",
+            "content": "hibernate",
+            "description": "java  is best",
+            "tags": [
+                "java"
+            ],
+            "media_files": [],
+            "created_at": "2025-01-06T15:19:16.325816",
+            "likes": 0,
+            "comments": []
+        },
+        {
+            "id": "5",
+            "user_id": "4",
+            "content": "completed my first dsa",
+            "description": "#dsa #java #gfg",
+            "tags": [
+                "java dsa"
+            ],
+            "media_files": [
+                "Screenshot_2024-08-22_203141.png"
+            ],
+            "created_at": "2025-01-06T15:25:08.269003",
+            "likes": 1,
+            "comments": [],
+            "liked_by": [
+                "4"
+            ]
+        },
+        {
+            "id": "6",
+            "user_id": "6",
+            "content": "oops in java",
+            "description": "oops are important",
+            "tags": [
+                "oops"
+            ],
+            "media_files": [],
+            "created_at": "2025-01-06T15:28:38.789413",
+            "likes": 1,
+            "comments": [],
+            "liked_by": [
+                "8"
+            ]
+        },
+        {
+            "id": "7",
+            "user_id": "8",
+            "content": "java",
+            "description": "#java",
+            "tags": [
+                "java"
+            ],
+            "media_files": [],
+            "created_at": "2025-01-06T15:41:13.886451",
+            "likes": 1,
+            "comments": [],
+            "liked_by": [
+                "9"
+            ]
+        }
+    ],
+    "users": [],
+    "interactions": []
+}

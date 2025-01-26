@@ -1,0 +1,44 @@
+{
+    "messages": [
+        {
+            "id": "1",
+            "user_id": "3",
+            "group_id": "2",
+            "content": "hiu",
+            "created_at": "2025-01-06T15:21:03.085718",
+            "file_path": null
+        },
+        {
+            "id": "2",
+            "user_id": "3",
+            "group_id": "2",
+            "content": "",
+            "created_at": "2025-01-06T15:21:10.659336",
+            "file_path": "mermaid-diagram-2025-01-06-081356.png"
+        },
+        {
+            "id": "3",
+            "user_id": "3",
+            "group_id": "2",
+            "content": "java is platform independent",
+            "created_at": "2025-01-06T15:21:46.590159",
+            "file_path": null
+        },
+        {
+            "id": "4",
+            "user_id": "8",
+            "group_id": "2",
+            "content": "yeah java is platform independent because of jvm",
+            "created_at": "2025-01-06T15:37:48.656634",
+            "file_path": null
+        },
+        {
+            "id": "5",
+            "user_id": "9",
+            "group_id": "2",
+            "content": "java is good",
+            "created_at": "2025-01-06T15:50:37.034852",
+            "file_path": null
+        }
+    ]
+}

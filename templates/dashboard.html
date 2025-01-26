@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Main content -->
+            <div class="md:col-span-2 space-y-6">
+                <!-- Create post button -->
+                <div class="bg-blue shadow rounded-lg p-4">
+                    <a href="{{ url_for('create_post') }}" class="block w-full text-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-indigo-600 hover:bg-indigo-800">
+                        Create New Post
+                    </a>
+                </div>
+                <!-- My Posts button -->
+                <div class="bg-white dark:bg-dark-bg-200 shadow rounded-lg p-4">
+                    <a href="{{ url_for('my_posts') }}" class="block w-full text-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-indigo-600 hover:bg-indigo-800">
+                        My Posts
+                    </a>
+                </div>
+                <!-- Posts -->
+                {% for post in posts %}
+                <div class="bg-white-500 shadow rounded-lg p-4">
+                    <div class="mb-4">
+                        <div class="flex items-center">
+                            <div class="ml-3">
+                                <p class="font-medium text-black dark:text-black-100">User  #{{ post.user_id }}</p>
+                                <p class="text-sm text-black">{{ post.created_at }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-black">{{ post.content }}</p>
+                    <p class="text-black italic">{{ post.description }}</p>
+                    <div class="mt-2">
+                        {% for tag in post.tags %}
+                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium bg-custom-orange-100 text-custom-orange-800 rounded-full">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-4">
+                        {% for media_file in post.media_files %}
+                        {% if media_file.lower().endswith(('.mp4', '.mov', '.avi')) %}
+                            <video controls class="w-full rounded-lg">
+                                <source src="{{ url_for('static', filename='uploads/' + media_file) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% else %}
+                            <img src="{{ url_for('static', filename='uploads/' + media_file) }}" alt="Post media" class="w-full rounded-lg">
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <button id="like-button-{{ post.id }}" onclick="likePost('{{ post.id }}')" class="flex items-center {{ 'text-red-500' if session.user_id in post.liked_by else 'text-black-500' }} hover:text-black-600">
+                            <svg class="h-5 w-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+                            </svg>
+                            <span id="likes-{{ post.id }}">{{ post.likes }}</span>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Recommended Users -->
+                <div class="bg-white-300 dark:bg-dark-bg-200 shadow rounded-lg p-4">
+                    <h2 class="text-lg font-medium text-black-900 dark:text-black-100 mb-4">Recommended Users</h2>
+                    <div class="space-y-4">
+                        {% for user in recommended_users %}
+                        <div class="flex items-center">
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-black-900">{{ user.email }}</p>
+                                <p class="text-xs text-black-500">{{ user.interests|join(', ') }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Your Groups -->
+                <div class="bg-white dark:bg-dark-bg-200 shadow rounded-lg p-4">
+                    <h2 class="text-lg font-medium text-black-900 dark:text-black-100 mb-4">Your Groups</h2>
+                    <div class="space-y-4">
+                        {% for group in groups %}
+                        {% if session.user_id in group.members %}
+                        <div>
+                            <p class="text-sm font-medium text-black-900">{{ group.name }}</p>
+                            <p class="text-xs text-black-500">{{ group.description }}</p>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function likePost(postId) {
+    fetch(`/api/like_post/${postId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`likes-${postId}`).textContent = data.likes; // Update the like count
+            // Change the button color to red
+            const likeButton = document.getElementById(`like-button-${postId}`);
+            likeButton.classList.remove('text-black-500');
+            likeButton.classList.add('text-red-500'); // Change to red when liked
+            likeButton.disabled = true; // Disable the button to prevent multiple clicks
+            likeButton.classList.add('opacity-50'); // Optional: Add a visual cue
+        } else {
+            alert(data.message); // Show message if user has already liked
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
+{% endblock %}

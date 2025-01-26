@@ -1,0 +1,174 @@
+<!-- group_chat.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+        <div class="flex flex-col h-[calc(100vh-12rem)]">
+            <!-- Group Header -->
+            <div class="bg-white dark:bg-dark-bg-200 shadow-sm p-4 rounded-t-lg">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">{{ group.name }}</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-300">{{ group.members|length }} members</p>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="flex-1 bg-white dark:bg-dark-bg-200 overflow-y-auto p-4 border-t border-b" id="messages-container">
+                {% for message in messages %}
+                <div class="mb-4 {% if message.user_id == session.user_id %}ml-auto{% endif %} max-w-lg">
+                    <div class="flex items-start">
+                        {% if message.user_id != session.user_id %}
+                        <div class="flex-shrink-0">
+                            <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                <span class="text-sm font-medium text-gray-700">
+                                    {{ message.user_id[:2] }}
+                                </span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="ml-2 {% if message.user_id == session.user_id %}bg-custom-orange-100{% else %}bg-gray-100{% endif %} rounded-lg px-4 py-2">
+                            <div class="text-sm">
+                                <span class="font-medium text-gray-900 dark:text-gray-100">
+                                    {% for user in users %}
+                                        {% if user.id == message.user_id %}
+                                            {{ user.email.split('@')[0] }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                                <span class="text-gray-500 text-xs ml-2">
+                                    {{ message.created_at }}
+                                </span>
+                            </div>
+                            <p class="text-gray-800 dark:text-gray-200">{{ message.content }}</p>
+                            {% if message.file_path %}
+                            <div class="mt-2">
+                                <a href="{{ url_for('static', filename='uploads/' + message.file_path) }}" 
+                                   class="text-custom-orange-600 hover:text-custom-orange-800 text-sm flex items-center">
+                                    <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    {{ message.file_path }}
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Message Input -->
+            <div class="bg-white dark:bg-dark-bg-200 p-4 rounded-b-lg">
+                <!-- Preview Area for Selected File -->
+                <div id="file-preview" class="mb-2 p-2 border rounded-md bg-gray-100 hidden">
+                    <strong>File Preview:</strong>
+                    <div id="preview-content" class="flex items-center">
+                        <img id="preview-image" src="" alt="File Preview" class="hidden w-32 h-32 object-cover mr-2">
+                        <video id="preview-video" controls class="hidden w-32 h-32 object-cover mr-2">
+                            <source id="video-source" src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <span id="preview-filename" class="text-gray-800"></span>
+                    </div>
+                </div>
+
+                <form id="message-form" class="flex space-x-4">
+                    <input type="hidden" name="group_id" value="{{ group.id }}">
+                    <div class="flex-1">
+                        <input type="text" name="message" 
+                               class="w ```html
+                               full px-4 py-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                               placeholder="Type your message..." id="message-input" oninput="updatePreview()">
+                    </div>
+                    <div class="flex-shrink-0">
+                        <input type="file" name="file" id="file-input" class="hidden" accept="image/*,video/*" onchange="showFilePreview()">
+                        <label for="file-input" 
+                               class="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                            </svg>
+                        </label>
+                    </div>
+                    <button type="submit" 
+                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700">
+                        Send
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showFilePreview() {
+    const fileInput = document.getElementById('file-input');
+    const filePreview = document.getElementById('file-preview');
+    const previewContent = document.getElementById('preview-content');
+    const previewImage = document.getElementById('preview-image');
+    const previewVideo = document.getElementById('preview-video');
+    const videoSource = document.getElementById('video-source');
+    const previewFilename = document.getElementById('preview-filename');
+
+    // Clear previous previews
+    previewImage.classList.add('hidden');
+    previewVideo.classList.add('hidden');
+    previewFilename.textContent = '';
+
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        previewFilename.textContent = file.name;
+
+        // Check file type and set preview accordingly
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewImage.classList.remove('hidden');
+                filePreview.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        } else if (file.type.startsWith('video/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                videoSource.src = e.target.result;
+                previewVideo.classList.remove('hidden');
+                filePreview.classList.remove('hidden');
+                previewVideo.load();
+            };
+            reader.readAsDataURL(file);
+        }
+    } else {
+        filePreview.classList.add('hidden'); // Hide preview if no file is selected
+    }
+}
+
+// Existing code for sending messages
+document.getElementById('message-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    fetch('/api/send_message', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Reset form and preview
+            this.reset();
+            document.getElementById('file-preview').classList.add('hidden'); // Hide preview
+            // Reload messages or append new message
+            location.reload();
+        }
+    });
+});
+
+// Scroll to bottom of messages on load
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('messages-container');
+    container.scrollTop = container.scrollHeight;
+});
+</script>
+{% endblock %}

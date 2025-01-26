@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Distraction-Free Social{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-orange': {
+                            50: '#FFF3E0',
+                            100: '#FFE0B2',
+                            500: '#FF6B35',
+                            600: '#FF5A1F',
+                            700: '#FF4500'
+                        },
+                        'dark-bg': {
+                            100: '#121212',
+                            200: '#1E1E1E',
+                            300: '#2C2C2C'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2C2C2C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B35;
+            border-radius: 6px;
+        }
+        .dark-input {
+            background-color: #2C2C2C;
+            color: #ffffff;
+            border-color: #4A4A4A;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-dark-bg-100 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    {% if session.user_id %}
+    <nav class="bg-white dark:bg-dark-bg-200 border-b border-gray-200 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <a href="{{ url_for('dashboard') }}" class="flex-shrink-0 flex items-center">
+                        <span class="text-xl font-bold text-custom-orange-600">DFS</span>
+                    </a>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="{{ url_for('dashboard') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-black font-medium">Dashboard</a>
+                        <a href="{{ url_for('groups') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-black font-medium">Groups</a>
+                        <a href="{{ url_for('profile') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-black font-medium">Profile</a>
+                        {% if session.is_admin %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-white font-medium">Admin</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="{{ url_for('logout') }}" class="bg-indigo-500 hover:bg-custom-orange-600 text-white px-4 py-2 rounded-md text-white font-medium">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <main class="{% if session.user_id %}pt-16{% endif %}">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('color-theme');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+            htmlElement .classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                localStorage.setItem('color-theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>

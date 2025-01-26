@@ -1,0 +1,102 @@
+{
+    "posts": [],
+    "users": [
+        {
+            "id": "admin",
+            "email": "admin@admin.com",
+            "password": "scrypt:32768:8:1$ToZzrJ2RrAeBO4T9$337c2186ab113e08f4c67e88cbb2439ca056c35f6a1ca0e02ee10b498ad9bb359cc662504fc988308e1b5c8d274415be4a916d11922e56d36eb9a0e92b5c3061",
+            "interests": [
+                "Administration"
+            ],
+            "created_at": "2025-01-06T15:09:46.596886",
+            "is_admin": true
+        },
+        {
+            "id": "2",
+            "email": "123@gmail.com",
+            "password": "scrypt:32768:8:1$Wb5ozVgsuHySqCWW$1ec21e8c97c00034521bd622ec329287dcfa192e0a99866409ada229d84331d1ec082edc4ccdef283aa86e4e34d83a8e20752a7bbe0e81f9774fa9d1c440dc1c",
+            "interests": [
+                "java",
+                "python",
+                "rust"
+            ],
+            "created_at": "2025-01-06T15:11:06.673151",
+            "is_admin": false
+        },
+        {
+            "id": "3",
+            "email": "1234@gmail.com",
+            "password": "scrypt:32768:8:1$2f3QUg5dORTulPC9$a76154af8ac562e0555c9d181b69f8018cb0e50cb3c1df137589201fb946097249baaed6a8c39741efe9fb2545684a6b99c03fe3d3753d257514dfeff77c25b7",
+            "interests": [
+                "java",
+                "ruby",
+                "rust"
+            ],
+            "created_at": "2025-01-06T15:18:09.870517",
+            "is_admin": false
+        },
+        {
+            "id": "4",
+            "email": "125@gmail.com",
+            "password": "scrypt:32768:8:1$e87irAfGK5Fw7uvb$0c151cea38e4ea3a4e8370a7c4c2586d01fc0fba9be9f3ff775691ddfbcc03c96a56676ada00605c0c1ad8ebbfa6c01a2d44c66f10ebe38593468f677ed5396a",
+            "interests": [
+                "python"
+            ],
+            "created_at": "2025-01-06T15:22:44.512313",
+            "is_admin": false
+        },
+        {
+            "id": "5",
+            "email": "129@gmail.com",
+            "password": "scrypt:32768:8:1$dNrNApWt4fOMB2gu$9b085791581625a865bc20af49eaa7b9ac36609d6075c551e6371949f5318ac03184961c73a9c457ffd30f616a5e4cbee704c80053e01aaa8976b54fedc980d3",
+            "interests": [
+                "perl"
+            ],
+            "created_at": "2025-01-06T15:23:40.996093",
+            "is_admin": false
+        },
+        {
+            "id": "6",
+            "email": "java@gmail.com",
+            "password": "scrypt:32768:8:1$l8rATvENzpC0d2uD$a14c60691b6b314cb3fd1152b291e3c700b3149f1e002f30a5df29108ac80f97a201f4a0a62bea3478615a695000bfd90c01900a721bcb44322fb359531a4336",
+            "interests": [
+                "java"
+            ],
+            "created_at": "2025-01-06T15:26:56.737277",
+            "is_admin": false
+        },
+        {
+            "id": "7",
+            "email": "python@gmail.com",
+            "password": "scrypt:32768:8:1$F73YDZl6FuDVvFyt$3d61eff0f225b453e43cd73ae5810a6b593845fbe10dea89b76466617b95e9c4121517d05905206db23393628bce1add4e3d838e3abff83443851fe556772349",
+            "interests": [
+                "python"
+            ],
+            "created_at": "2025-01-06T15:30:44.539803",
+            "is_admin": false
+        },
+        {
+            "id": "8",
+            "email": "java1@gmail.com",
+            "password": "scrypt:32768:8:1$HB5xPUTJDjD1zdO1$40c54d4b294890e34ee03a1ff6e322771c0b5af2d6ccc5005dcec3e32bfb26e2660bdfc1357c06be0013cf0c6c46012e8d387ba23faafd8e88debc8109e1cdec",
+            "interests": [
+                "java",
+                "python"
+            ],
+            "created_at": "2025-01-06T15:36:25.624507",
+            "is_admin": false
+        },
+        {
+            "id": "9",
+            "email": "java13@gmail.com",
+            "password": "scrypt:32768:8:1$DDtQ5t4u0RlxYk0V$250a297ee25d9f3c7d08a0472485b687d2fbc7ecf5e45109f45a2128f30a60e20c8a7b5259992e2cd6b7763c87c54d6298fb593a2a2ef80373980fc63847017c",
+            "interests": [
+                "java",
+                "python"
+            ],
+            "created_at": "2025-01-06T15:48:31.321530",
+            "is_admin": false
+        }
+    ],
+    "interactions": []
+}
